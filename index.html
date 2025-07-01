@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>FlipCash - Tonton & Dapatkan Poin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 20px; }
+    iframe { width: 100%; height: 500px; border: none; }
+    .info { margin: 15px 0; }
+  </style>
+</head>
+<body>
+  <h2>🎁 Tonton Iklan & Klaim Poin</h2>
+  <div class="info">Tunggu iklan selesai, poin akan bisa diklaim setelahnya.</div>
+
+  <iframe id="offerwall" src="https://wall.adgem.com/offer-wall?appid=YOUR_ADGEM_APP_ID&user_id=USER_ID"></iframe>
+
+  <script>
+    // Ganti USER_ID dengan ID Telegram user dari parameter WebApp
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    const userId = tg.initDataUnsafe.user?.id;
+
+    function unlockKlaim() {
+      fetch("https://flipcash--telegramprofpro.repl.co/unlock", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId,
+          key: "flip12345"
+        })
+      }).then(res => res.json())
+        .then(data => console.log("Klaim unlocked:", data))
+        .catch(err => console.error(err));
+    }
+
+    // Otomatis unlock setelah 15 detik
+    setTimeout(() => {
+      unlockKlaim();
+    }, 15000);
+  </script>
+</body>
+</html>
